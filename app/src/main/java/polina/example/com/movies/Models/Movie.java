@@ -10,21 +10,31 @@ public class Movie {
 
     int id;
     String title;
-    String image;
-    double rating;
+    String image_port;
+    String image_land;
+    float rating;
     List<Integer> genre;
     String description;
 
-    public Movie(int id, String title, String image, double rating, List<Integer> genre, String description) {
+    public Movie(int id, String title, String image_port, String image_land, float rating, List<Integer> genre, String description) {
         this.id = id;
         this.title = title;
-        this.image = image;
+        this.image_port = image_port;
+        this.image_land = image_land;
         this.rating = rating;
         this.genre = genre;
         this.description = description;
     }
 
     public Movie() {
+    }
+
+    public String getImage_land() {
+        return image_land;
+    }
+
+    public void setImage_land(String image_land) {
+        this.image_land = image_land;
     }
 
     public int getId() {
@@ -43,19 +53,19 @@ public class Movie {
         this.title = title;
     }
 
-    public String getImage() {
-        return image;
+    public String getImage_port() {
+        return image_port;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage_port(String image_port) {
+        this.image_port = image_port;
     }
 
-    public double getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
