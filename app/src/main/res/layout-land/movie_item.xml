@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <ImageView
@@ -12,8 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/image_margin"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_margin="@dimen/image_margin" />
 
     <TextView
         android:id="@+id/movie_title"
@@ -68,5 +67,5 @@
         android:layout_height="1dp"
         android:layout_below="@+id/movie_image"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@android:color/darker_gray" />
 </RelativeLayout>

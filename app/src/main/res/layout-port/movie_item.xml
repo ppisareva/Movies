@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <ImageView
@@ -12,8 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/image_margin"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_margin="@dimen/image_margin"       />
 
     <TextView
         android:id="@+id/movie_title"
@@ -43,9 +42,11 @@
         android:layout_alignEnd="@+id/movie_title"
         android:layout_alignRight="@+id/movie_title"
         android:layout_below="@+id/movie_ratingBar"
+        android:maxLines="1"
         android:layout_marginTop="@dimen/genre_margin"
         android:layout_toRightOf="@+id/movie_image"
         android:text="Action"
+        android:ellipsize="end"
         android:textSize="@dimen/genre_text" />
 
     <TextView
@@ -59,7 +60,7 @@
         android:layout_marginTop="@dimen/description_margin"
         android:layout_toRightOf="@+id/movie_image"
         android:ellipsize="end"
-        android:maxLines="5"
+        android:maxLines="4"
         android:textSize="@dimen/description_text"
         android:text="Jack Reacher must uncover the truth behind a major government conspiracy in order to clear his name. On the run as a fugitive from the law, Reacher uncovers a potential secret from his past that could change his life forever." />
 
@@ -69,5 +70,5 @@
         android:layout_height="1dp"
         android:layout_below="@+id/movie_image"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@android:color/darker_gray" />
 </RelativeLayout>
