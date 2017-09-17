@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.BlurTransformation;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import polina.example.com.movies.Activities.MovieActivity;
 import polina.example.com.movies.Activities.YouTubeActivity;
 import polina.example.com.movies.Models.Movie;
@@ -28,6 +30,7 @@ import static android.R.id.candidatesArea;
 import static android.R.id.list;
 import static android.R.id.redo;
 import static android.R.id.switch_widget;
+import static java.lang.System.load;
 import static polina.example.com.movies.Utils.Utils.getGenre;
 
 /**
@@ -101,7 +104,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         viewHolder.rating.setRating(movie.getRating()/2);
         String url = context.getResources().getString(R.string.image_uri) + movie.getImage_land();
         System.err.println("URL: " + url);
-        Picasso.with(context).load(url).placeholder(R.drawable.placeholder)
+        Picasso.with(context).load(url).transform(new RoundedCornersTransformation(10, 0)).placeholder(R.drawable.placeholder)
                 .error(R.drawable.icon_error_).into(viewHolder.image);
         viewHolder.genre.setText(Utils.getGenre(movie));
     }
@@ -117,12 +120,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         String url = context.getResources().getString(R.string.image_uri) +
                 (Utils.isLandOrientation(context) ? movie.getImage_land() : movie.getImage_port());
         System.err.println("URL: " + url);
-        Picasso.with(context).load(url).placeholder(R.drawable.placeholder).error(R.drawable.icon_error_).into(viewHolder.image);
+        Picasso.with(context).load(url)
+                .transform(new RoundedCornersTransformation(10, 0))
+                .placeholder(R.drawable.placeholder).error(R.drawable.icon_error_).into(viewHolder.image);
         viewHolder.genre.setText(Utils.getGenre(movie));
     }
 
 
-    public class ViewHolder1 extends RecyclerView.ViewHolder  implements View.OnClickListener,OnMoviesTrailerListener {
+    public class ViewHolder1 extends RecyclerView.ViewHolder  implements View.OnClickListener{
         ImageView image;
         TextView title;
         RatingBar rating;
@@ -153,28 +158,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         @Override
         public void onClick(View view) {
-            int id = view.getId();
-            switch (id){
-                case R.id.movie_item_layout:
                     Intent intent = new Intent(context, MovieActivity.class);
                     intent.putExtra(Utils.MOVIE, movie);
                     context.startActivity(intent);
-                    break;
-                case R.id.imageButtonTrailerPlay:
-                    NetworkConnection networkConnection = new NetworkConnection(context);
-                    networkConnection.getMovieTrailer(this, movie.getId());
 
-            }
+
 
         }
 
-        @Override
-        public void onTrailerLoad(String youtubeId) {
-            Intent intent = new Intent(context, YouTubeActivity.class);
-            intent.putExtra(Utils.MOVIE, youtubeId);
-            context.startActivity(intent);
 
-        }
     }
 
         public  class ViewHolder2 extends RecyclerView.ViewHolder implements View.OnClickListener,  OnMoviesTrailerListener{
@@ -195,12 +187,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             public ViewHolder2(View itemView) {
                 super(itemView);
-                layout = (RelativeLayout) itemView.findViewById(R.id.movie_play_item);
-                layout.setOnClickListener(this);
                 image = (ImageView) itemView.findViewById(R.id.movie_image_play);
                 title = (TextView) itemView.findViewById(R.id.movie_title_play);
                 rating = (RatingBar) itemView.findViewById(R.id.movie_ratingBar_play);
                 genre = (TextView) itemView.findViewById(R.id.movie_genre_play);
+                itemView.setOnClickListener(this);
+                itemView.findViewById(R.id.imageButtonTrailerPlay).setOnClickListener(this);
             }
 
             @Override
@@ -211,7 +203,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         NetworkConnection networkConnection = new NetworkConnection(context);
                         networkConnection.getMovieTrailer(this, movie.getId());
                         break;
-                    case R.id.movie_item_layout:
+                    case R.id.movie_play_item:
                         Intent intent = new Intent(context, MovieActivity.class);
                         intent.putExtra(Utils.MOVIE, movie);
                         context.startActivity(intent);

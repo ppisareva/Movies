@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import polina.example.com.movies.Models.Movie;
 import polina.example.com.movies.Network.NetworkConnection;
 import polina.example.com.movies.Network.OnMoviesTrailerListener;
@@ -31,14 +32,17 @@ public class MovieActivity extends AppCompatActivity implements OnMoviesTrailerL
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         movie = getIntent().getParcelableExtra(Utils.MOVIE);
         collapsingToolbar.setTitle(movie.getTitle());
         ((RatingBar)findViewById(R.id.movie_rat)).setRating(movie.getRating()/2);
         ((TextView)findViewById(R.id.movie_gen)).setText(Utils.getGenre(movie));
         ((TextView)findViewById(R.id.movie_desc)).setText(movie.getDescription());
         String url = getString(R.string.image_uri) + movie.getImage_land();
-        Picasso.with(this).load(url).placeholder(R.drawable.placeholder).error(R.drawable.icon_error_).into((ImageView) findViewById(R.id.header));
+        Picasso.with(this).load(url).transform(new RoundedCornersTransformation(10, 0))
+                .placeholder(R.drawable.placeholder).error(R.drawable.icon_error_)
+                .into((ImageView) findViewById(R.id.header));
 
 
     }

@@ -31,6 +31,7 @@
     <dimen name="right_margin_image">7dp</dimen>
     <dimen name="image_button_margin_land">148dp</dimen>
     <dimen name="image_button_margin_port">11dp</dimen>
+    <dimen name="status_bar_height">24dp</dimen>
 
 
 </resources>
