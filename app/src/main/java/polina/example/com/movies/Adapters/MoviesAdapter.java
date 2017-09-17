@@ -1,6 +1,7 @@
 package polina.example.com.movies.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,24 +9,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import polina.example.com.movies.Activities.MovieActivity;
 import polina.example.com.movies.Models.Movie;
 import polina.example.com.movies.R;
 import polina.example.com.movies.Utils.Utils;
+
+import static android.R.id.list;
+import static android.R.id.redo;
+import static polina.example.com.movies.Utils.Utils.getGenre;
 
 /**
  * Created by polina on 9/13/17.
  */
 
 public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    Context context;
+    public  Context context;
     List<Movie> movieList;
     private static final int SHOW_POPULAR =1;
     private static final int SHOW_NORMAL = 2;
+    private int currentPosition = 0;
 
     public MoviesAdapter(@NonNull Context context, @NonNull List<Movie> objects) {
         super();
@@ -50,19 +59,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder = new ViewHolder1(parent);
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         switch (viewType) {
             case SHOW_NORMAL:
                 View v1 = inflater.inflate(R.layout.movie_item, parent, false);
-                viewHolder = new ViewHolder1(v1);
-                break;
+                RecyclerView.ViewHolder viewHolder1 = new ViewHolder1(v1);
+                return viewHolder1;
             case SHOW_POPULAR:
                 View v2 = inflater.inflate(R.layout.movie_trailer_play, parent, false);
-                viewHolder = new ViewHolder2(v2);
-                break;
+                RecyclerView.ViewHolder viewHolder2 = new ViewHolder2(v2);
+                return viewHolder2;
         }
-        return viewHolder;
+        return null;
     }
 
     @Override
@@ -83,29 +91,21 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private void configureViewHolder2(ViewHolder2 viewHolder, int position) {
         Movie movie = movieList.get(position);
+        viewHolder.setMovie(movie);
         viewHolder.title.setText(movie.getTitle());
         viewHolder.rating.setRating(movie.getRating()/2);
         String url = context.getResources().getString(R.string.image_uri) + movie.getImage_land();
         System.err.println("URL: " + url);
         Picasso.with(context).load(url).placeholder(R.drawable.placeholder)
                 .error(R.drawable.icon_error_).into(viewHolder.image);
-        viewHolder.genre.setText(getGenre(movie));
+        viewHolder.genre.setText(Utils.getGenre(movie));
     }
 
-    private String getGenre(Movie movie) {
-        String genre = "";
-        for(int i = 0; i<movie.getGenre().size(); i++){
-            if(i==movie.getGenre().size()-1){
-                genre = genre + Utils.getGenre(movie.getGenre().get(i));
-            } else {
-                genre = genre + Utils.getGenre(movie.getGenre().get(i)) + ", ";
-            }
-        }
-        return genre;
-    }
+
 
     private void configureViewHolder1(ViewHolder1 viewHolder, int position) {
         Movie movie = movieList.get(position);
+        viewHolder.setMovie(movie);
         viewHolder.title.setText(movie.getTitle());
         viewHolder.description.setText(movie.getDescription());
         viewHolder.rating.setRating(movie.getRating()/2);
@@ -113,47 +113,81 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 (Utils.isLandOrientation(context) ? movie.getImage_land() : movie.getImage_port());
         System.err.println("URL: " + url);
         Picasso.with(context).load(url).placeholder(R.drawable.placeholder).error(R.drawable.icon_error_).into(viewHolder.image);
-        viewHolder.genre.setText(getGenre(movie));
+        viewHolder.genre.setText(Utils.getGenre(movie));
     }
 
 
-    public static class ViewHolder1 extends RecyclerView.ViewHolder {
+    public class ViewHolder1 extends RecyclerView.ViewHolder  implements View.OnClickListener{
         ImageView image;
         TextView title;
         RatingBar rating;
         TextView genre;
         TextView description;
+        Movie movie;
+        RelativeLayout layout;
+
+        public Movie getMovie() {
+            return movie;
+        }
+
+        public void setMovie(Movie movie) {
+            this.movie = movie;
+        }
 
         public ViewHolder1(View itemView) {
             super(itemView);
+            layout = (RelativeLayout) itemView.findViewById(R.id.movie_item_layout);
+            layout.setOnClickListener(this);
             image = (ImageView) itemView.findViewById(R.id.movie_image);
             title = (TextView) itemView.findViewById(R.id.movie_title);
             rating = (RatingBar) itemView.findViewById(R.id.movie_ratingBar);
             genre = (TextView) itemView.findViewById(R.id.movie_genre);
             description = (TextView) itemView.findViewById(R.id.movie_description);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(context, MovieActivity.class);
+            intent.putExtra(Utils.MOVIE, movie);
+            context.startActivity(intent);
         }
     }
 
-        public static class ViewHolder2 extends RecyclerView.ViewHolder {
+        public  class ViewHolder2 extends RecyclerView.ViewHolder implements View.OnClickListener{
             ImageView image;
             TextView title;
             RatingBar rating;
             TextView genre;
             TextView description;
+            Movie movie;
+            RelativeLayout layout;
+
+            public Movie getMovie() {
+                return movie;
+            }
+
+            public void setMovie(Movie movie) {
+                this.movie = movie;
+            }
 
             public ViewHolder2(View itemView) {
                 super(itemView);
+                layout = (RelativeLayout) itemView.findViewById(R.id.movie_play_item);
+                layout.setOnClickListener(this);
                 image = (ImageView) itemView.findViewById(R.id.movie_image_play);
                 title = (TextView) itemView.findViewById(R.id.movie_title_play);
                 rating = (RatingBar) itemView.findViewById(R.id.movie_ratingBar_play);
                 genre = (TextView) itemView.findViewById(R.id.movie_genre_play);
             }
 
-
-
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MovieActivity.class);
+                intent.putExtra(Utils.MOVIE, movie);
+                context.startActivity(intent);
+            }
         }
-
-
 
 
 }

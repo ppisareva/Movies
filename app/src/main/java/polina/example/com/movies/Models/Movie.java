@@ -1,12 +1,17 @@
 package polina.example.com.movies.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.v4.os.ParcelableCompat;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by polina on 9/13/17.
  */
 
-public class Movie {
+public class Movie implements Parcelable {
 
     int id;
     String title;
@@ -16,18 +21,48 @@ public class Movie {
     List<Integer> genre;
     String description;
 
-    public Movie(int id, String title, String image_port, String image_land, float rating, List<Integer> genre, String description) {
-        this.id = id;
-        this.title = title;
-        this.image_port = image_port;
-        this.image_land = image_land;
-        this.rating = rating;
-        this.genre = genre;
-        this.description = description;
-    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
 
     public Movie() {
     }
+
+    public Movie(Parcel in) {
+        id=in.readInt();
+        title = in.readString();
+        image_port = in.readString();
+        image_land = in.readString();
+        rating = in.readFloat();
+        genre = new ArrayList<>();
+        in.readList(genre, Integer.class.getClassLoader());
+        description = in.readString();
+
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeString(image_port);
+        parcel.writeString(image_land);
+        parcel.writeFloat(rating);
+        parcel.writeList(genre);
+        parcel.writeString(description);
+    }
+
 
     public String getImage_land() {
         return image_land;
@@ -84,4 +119,6 @@ public class Movie {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }

@@ -27,6 +27,7 @@ public class Utils {
     public static final String ID ="ID";
     public static final String GENRE_ARRAY="genre_ids";
     public static final String RATING="vote_average";
+    public static final String MOVIE="movie";
 
 
 
@@ -63,6 +64,17 @@ public class Utils {
         return false;
     }
 
+    public static String getGenre(Movie movie) {
+        String genre = "";
+        for(int i = 0; i<movie.getGenre().size(); i++){
+            if(i==movie.getGenre().size()-1){
+                genre = genre + getGenre(movie.getGenre().get(i));
+            } else {
+                genre = genre + getGenre(movie.getGenre().get(i)) + ", ";
+            }
+        }
+        return genre;
+    }
 
 
     public static List<Movie> parseJson(JSONObject response) throws JSONException {
