@@ -17,19 +17,24 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import polina.example.com.movies.Activities.MovieActivity;
+import polina.example.com.movies.Activities.YouTubeActivity;
 import polina.example.com.movies.Models.Movie;
+import polina.example.com.movies.Network.NetworkConnection;
+import polina.example.com.movies.Network.OnMoviesTrailerListener;
 import polina.example.com.movies.R;
 import polina.example.com.movies.Utils.Utils;
 
+import static android.R.id.candidatesArea;
 import static android.R.id.list;
 import static android.R.id.redo;
+import static android.R.id.switch_widget;
 import static polina.example.com.movies.Utils.Utils.getGenre;
 
 /**
  * Created by polina on 9/13/17.
  */
 
-public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     public  Context context;
     List<Movie> movieList;
     private static final int SHOW_POPULAR =1;
@@ -117,7 +122,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    public class ViewHolder1 extends RecyclerView.ViewHolder  implements View.OnClickListener{
+    public class ViewHolder1 extends RecyclerView.ViewHolder  implements View.OnClickListener,OnMoviesTrailerListener {
         ImageView image;
         TextView title;
         RatingBar rating;
@@ -148,18 +153,35 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(context, MovieActivity.class);
-            intent.putExtra(Utils.MOVIE, movie);
+            int id = view.getId();
+            switch (id){
+                case R.id.movie_item_layout:
+                    Intent intent = new Intent(context, MovieActivity.class);
+                    intent.putExtra(Utils.MOVIE, movie);
+                    context.startActivity(intent);
+                    break;
+                case R.id.imageButtonTrailerPlay:
+                    NetworkConnection networkConnection = new NetworkConnection(context);
+                    networkConnection.getMovieTrailer(this, movie.getId());
+
+            }
+
+        }
+
+        @Override
+        public void onTrailerLoad(String youtubeId) {
+            Intent intent = new Intent(context, YouTubeActivity.class);
+            intent.putExtra(Utils.MOVIE, youtubeId);
             context.startActivity(intent);
+
         }
     }
 
-        public  class ViewHolder2 extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public  class ViewHolder2 extends RecyclerView.ViewHolder implements View.OnClickListener,  OnMoviesTrailerListener{
             ImageView image;
             TextView title;
             RatingBar rating;
             TextView genre;
-            TextView description;
             Movie movie;
             RelativeLayout layout;
 
@@ -183,8 +205,26 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MovieActivity.class);
-                intent.putExtra(Utils.MOVIE, movie);
+                int id = view.getId();
+                switch (id) {
+                    case R.id.imageButtonTrailerPlay:
+                        NetworkConnection networkConnection = new NetworkConnection(context);
+                        networkConnection.getMovieTrailer(this, movie.getId());
+                        break;
+                    case R.id.movie_item_layout:
+                        Intent intent = new Intent(context, MovieActivity.class);
+                        intent.putExtra(Utils.MOVIE, movie);
+                        context.startActivity(intent);
+                        break;
+
+
+                }
+            }
+
+            @Override
+            public void onTrailerLoad(String youtubeId) {
+                Intent intent = new Intent(context, YouTubeActivity.class);
+                intent.putExtra(Utils.MOVIE, youtubeId);
                 context.startActivity(intent);
             }
         }

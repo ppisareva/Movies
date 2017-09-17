@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:id="@+id/movie_play_item"
     android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -9,7 +10,7 @@
         android:layout_below="@+id/movie_title_play"
         android:layout_width="@dimen/image_list_weight_land"
         android:layout_height="@dimen/image_list_height_land"
-        android:layout_marginRight="@dimen/right_margin"
+        android:layout_marginRight="@dimen/right_margin_image"
         android:layout_marginLeft="@dimen/right_margin"
         android:layout_alignParentLeft="true"/>
 
@@ -42,6 +43,7 @@
         android:layout_height="wrap_content"
         android:text="Action"
         android:textSize="@dimen/genre_text"
+        android:layout_marginRight="@dimen/right_margin"
         android:layout_below="@+id/movie_title_play"
         android:layout_toRightOf="@+id/movie_image_play"
         android:layout_toEndOf="@+id/movie_image_play" />
@@ -53,5 +55,17 @@
         android:background="@android:color/darker_gray"
         android:layout_below="@+id/movie_image_play"
         />
+
+    <ImageButton
+        android:id="@+id/imageButtonTrailerPlay"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_youtube_port"
+        android:layout_marginRight="@dimen/image_button_margin_port"
+        android:layout_marginEnd="@dimen/image_button_margin_port"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/movie_ratingBar_play"
+        android:layout_toStartOf="@+id/movie_ratingBar_play" />
 
 </RelativeLayout>

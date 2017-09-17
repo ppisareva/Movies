@@ -24,10 +24,11 @@ public class Utils {
     public static final String DESCRIPTION ="overview";
     public static final String POSTER ="poster_path";
     public static final String BACKDROP ="backdrop_path";
-    public static final String ID ="ID";
+    public static final String ID ="id";
     public static final String GENRE_ARRAY="genre_ids";
     public static final String RATING="vote_average";
     public static final String MOVIE="movie";
+    public static final String MOVIE_TRAILER="key";
 
 
 
@@ -96,9 +97,14 @@ public class Utils {
             movie.setGenre(g);
             movie.setRating((float) object.optDouble(RATING));
             movies.add(movie);
-
         }
         return movies;
 
+    }
+
+    public static String parseVideoJson(JSONObject response) throws JSONException {
+        JSONArray jsonArray = response.getJSONArray(RESULTS);
+        JSONObject object = jsonArray.optJSONObject(0);
+        return object.optString(MOVIE_TRAILER);
     }
 }

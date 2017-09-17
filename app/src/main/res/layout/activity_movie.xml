@@ -25,7 +25,6 @@
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/movie_image_dimen"
-                android:background="@drawable/icon_error_"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 android:scrollbars = "vertical"
@@ -41,6 +40,16 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_anchor="@+id/appbar"
+        android:src="@drawable/ic_play_arrow_white_24dp"
+        app:backgroundTint="@color/red"
+        android:onClick="onLoadVideo"
+        app:layout_anchorGravity="bottom|right|end" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

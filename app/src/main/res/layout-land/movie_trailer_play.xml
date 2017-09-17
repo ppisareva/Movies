@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:clickable="true"
     android:id="@+id/movie_play_item"
@@ -54,5 +55,17 @@
             android:layout_height="1dp"
             android:layout_below="@+id/movie_image_play"
             android:background="@android:color/darker_gray" />
+
+        <ImageButton
+            android:id="@+id/imageButtonTrailerPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="@dimen/image_button_margin_land"
+            android:layout_marginRight="@dimen/image_button_margin_land"
+            app:srcCompat="@drawable/ic_youtube_land"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/movie_image_play"
+            android:layout_alignEnd="@+id/movie_image_play" />
 
 </RelativeLayout>

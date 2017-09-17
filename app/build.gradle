@@ -23,6 +23,7 @@ android {
 
     buildTypes.each {
         it.buildConfigField 'String', 'API_KEY', keystoreProperties['API_key']
+        it.buildConfigField 'String', 'API_KEY_GOOGLE', keystoreProperties['GOOGLE_key']
     }
 }
 

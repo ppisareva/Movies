@@ -22,12 +22,15 @@
     <dimen name="title_margin_top">5dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="movie_image_dimen">250dp</dimen>
-    <dimen name="tool_bar">35dp</dimen>
+    <dimen name="tool_bar">56dp</dimen>
     <dimen name="movie_rating_margin">16dp</dimen>
-    <dimen name="movie_rating_margin_top">16dp</dimen>
+    <dimen name="movie_rating_margin_top">7dp</dimen>
     <dimen name="genre_text_in_item">16sp</dimen>
     <dimen name="description_text_in_item">19sp</dimen>
     <dimen name="movie_margin_top">16dp</dimen>
+    <dimen name="right_margin_image">7dp</dimen>
+    <dimen name="image_button_margin_land">148dp</dimen>
+    <dimen name="image_button_margin_port">11dp</dimen>
 
 
 </resources>
