@@ -35,12 +35,12 @@ The following **additional** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-+![alt text](https://github.com/ppisareva/SimpleTodo/blob/master/test_case_list.gif)
++![alt text](https://github.com/ppisareva/Movies/blob/master/test_case_list.gif)
 
-+![alt text](https://github.com/ppisareva/SimpleTodo/blob/master/test_case_layouts.gif)
++![alt text](https://github.com/ppisareva/Movies/blob/master/test_case_layouts.gif)
 
 
-+![alt text](https://github.com/ppisareva/SimpleTodo/blob/master/test_case_item.gif)
++![alt text](https://github.com/ppisareva/Movies/blob/master/test_case_item.gif)
 
 GIF created with Android Studio.
 
