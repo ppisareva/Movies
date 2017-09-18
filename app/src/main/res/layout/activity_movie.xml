@@ -48,7 +48,7 @@
         app:layout_anchor="@+id/appbar"
         android:src="@drawable/ic_play_arrow_white_24dp"
         app:backgroundTint="@color/red"
-        android:onClick="onLoadVideo"
+        android:id="@+id/load_video_btn"
         app:layout_anchorGravity="bottom|right|end" />
 
     <android.support.v4.widget.NestedScrollView

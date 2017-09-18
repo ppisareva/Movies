@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import polina.example.com.movies.Models.Movie;
 import polina.example.com.movies.Network.NetworkConnection;
@@ -23,28 +27,32 @@ import polina.example.com.movies.Utils.Utils;
 public class MovieActivity extends AppCompatActivity implements OnMoviesTrailerListener {
     NetworkConnection networkConnection;
     Movie movie;
+
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.movie_rat) RatingBar rating;
+    @BindView(R.id.movie_gen) TextView gen;
+    @BindView(R.id.movie_desc) TextView desc;
+    @BindView(R.id.header) ImageView image;
+    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbar;
+
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+        ButterKnife.bind(this);
         networkConnection = new NetworkConnection(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         movie = getIntent().getParcelableExtra(Utils.MOVIE);
         collapsingToolbar.setTitle(movie.getTitle());
-        ((RatingBar)findViewById(R.id.movie_rat)).setRating(movie.getRating()/2);
-        ((TextView)findViewById(R.id.movie_gen)).setText(Utils.getGenre(movie));
-        ((TextView)findViewById(R.id.movie_desc)).setText(movie.getDescription());
+        rating.setRating(movie.getRating());
+        gen.setText(Utils.getGenre(movie));
+        desc.setText(movie.getDescription());
         String url = getString(R.string.image_uri) + movie.getImage_land();
         Picasso.with(this).load(url).transform(new RoundedCornersTransformation(10, 0))
                 .placeholder(R.drawable.placeholder).error(R.drawable.icon_error_)
-                .into((ImageView) findViewById(R.id.header));
-
-
+                .into(image);
     }
 
     @Override
@@ -58,6 +66,7 @@ public class MovieActivity extends AppCompatActivity implements OnMoviesTrailerL
         }
     }
 
+    @OnClick(R.id.load_video_btn)
     public void onLoadVideo(View v){
        networkConnection.getMovieTrailer(this, movie.getId());
     }

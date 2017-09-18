@@ -97,7 +97,7 @@ public class Movie implements Parcelable {
     }
 
     public float getRating() {
-        return rating;
+        return .5f*rating;
     }
 
     public void setRating(float rating) {

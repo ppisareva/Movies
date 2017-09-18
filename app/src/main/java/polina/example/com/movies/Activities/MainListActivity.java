@@ -13,6 +13,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import polina.example.com.movies.Adapters.MoviesAdapter;
 import polina.example.com.movies.Models.Movie;
 import polina.example.com.movies.Network.NetworkConnection;
@@ -21,22 +23,19 @@ import polina.example.com.movies.R;
 
 public class MainListActivity extends AppCompatActivity  implements OnListOfMoviesLoadListenter{
     final List<Movie> moviesList = new ArrayList<>();
-    private RecyclerView recyclerViewListOfMovies;
+    @BindView(R.id.list_movies) RecyclerView recyclerViewListOfMovies;
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
+        ButterKnife.bind(this);
         NetworkConnection networkConnection = new NetworkConnection(MainListActivity.this);
         networkConnection.getListOfMovies(this);
-        recyclerViewListOfMovies = (RecyclerView) findViewById(R.id.list_movies);
         recyclerViewListOfMovies.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        recyclerViewListOfMovies.setLayoutManager(mLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerViewListOfMovies.setLayoutManager(layoutManager);
         adapter = new MoviesAdapter(this, moviesList);
         recyclerViewListOfMovies.setAdapter(adapter);
 
